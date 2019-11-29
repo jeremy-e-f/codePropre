@@ -1,32 +1,77 @@
 package ex3;
 
+import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Représente le concept d'une zone
+ * @author UNK
+ *
+ */
 public abstract class Zone {
-
-	private List<String> types;
-	private List<String> noms;
-	private List<String> comportements;
+	/** Liste d'animaux */
+	private List<Animal> animaux;
 	
-	public void addAnimal(String typeAnimal, String nomAnimal, String comportement) {
-		types.add(typeAnimal);
-		noms.add(nomAnimal);
-		comportements.add(comportement);
+	/**
+	 * Constructeur
+	 */
+	public Zone() {
+		animaux= new ArrayList<Animal>();
+	}
+
+	/** Getter
+	 * @return the animaux
+	 */
+	public List<Animal> getAnimaux() {
+		return animaux;
+	}
+
+	/** Setter
+	 * @param animaux the animaux to set
+	 */
+	public void setAnimaux(List<Animal> animaux) {
+		this.animaux = animaux;
+	}
+
+	/** Ajoute un animal à la zone 
+	 * param animal
+	 * */
+	public void addAnimal(Animal animal) {
+		animaux.add(animal);
 	}
 	
+	/**
+	 * Affiche la liste des animaux de la zone
+	 */
 	public void afficherListeAnimaux(){
-		for (String nom: noms){
-			System.out.println(nom);
+		for (Animal animal: animaux){
+			System.out.println(animal.getNom());
 		}
 	}
 	
+	/**
+	 * Renvoie le nombre d'animaux de la zone
+	 * @return int
+	 */
 	public int compterAnimaux(){
-		return noms.size();
+		return animaux.size();
 	}
 	
+	/**
+	 * Récupére le poids moyen des animaux
+	 * @return double
+	 */
 	public abstract double getPoids();
 	
+	/**
+	 * Calcule le nombre de Kgs d'animaux par jour
+	 * @return double
+	 */
 	public double calculerKgsNourritureParJour(){
-		return noms.size() * getPoids();
+		return compterAnimaux() * getPoids();
 	}
+	
+	/**
+	 * Retourne le type de zone
+	 */
+	public abstract TypeZone getTypeZone();
 }

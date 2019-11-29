@@ -1,40 +1,69 @@
 package ex3;
 
-/**
+import java.util.ArrayList;
+import java.util.List;
+
+/** Représente un zoo
  * @author DIGINAMIC
  */
 public class Zoo {
-
+	/** Nom du zoo */
 	private String nom;
-	private SavaneAfricaine savaneAfricaine;
-	private ZoneCarnivore zoneCarnivore;
-	private FermeReptile fermeReptile;
-	private Aquarium aquarium;
 	
+	/** Liste des zones */
+	List<Zone> zones;
+	
+	/**
+	 * Constructeur
+	 * @param nom
+	 */
 	public Zoo(String nom){
 		this.nom = nom;
+		zones= new ArrayList<Zone>();
+		zones.add(new SavaneAfricaine());
+		zones.add(new ZoneCarnivore());
+		zones.add(new FermeReptile());
+		zones.add(new Aquarium());
 	}
 	
-	public void addAnimal(String nomAnimal, String typeAnimal, String comportement){
-		if (typeAnimal.equals("MAMMIFERE") && comportement.equals("CARNIVORE")){
-			zoneCarnivore.addAnimal(typeAnimal, nomAnimal, comportement);
-		}
-		else if (typeAnimal.equals("MAMMIFERE") && comportement.equals("HERBIVORE")){
-			savaneAfricaine.addAnimal(typeAnimal, nomAnimal, comportement);
-		}
-		else if (typeAnimal.equals("REPTILE")){
-			fermeReptile.addAnimal(typeAnimal, nomAnimal, comportement);
-		}
-		else if (typeAnimal.equals("POISSON")){
-			aquarium.addAnimal(typeAnimal, nomAnimal, comportement);
+	/**
+	 * Ajoute des animaux au zoo en fonction des zones disponibles
+	 * @param animal
+	 */
+	public void addAnimal(Animal animal){
+		for(Zone zone : this.zones){
+			switch(zone.getTypeZone()){
+				case SAVANEAFRICAINE:
+					if((animal.getType().equals(TypeAnimal.MAMMIFERE)) && (animal.getComportement().equals(ComportementAnimal.CARNIVORE))){
+						zone.addAnimal(animal);
+					}
+				break;
+				case AQUARIUM:
+					if(animal.getType().equals(TypeAnimal.POISSON)){
+						zone.addAnimal(animal);
+					}
+				break;
+				case FERMEREPTILE:
+					if(animal.getType().equals(TypeAnimal.REPTILE)){
+						zone.addAnimal(animal);
+					}
+				break;
+				case ZONECARNIVORE:
+					if((animal.getType().equals(TypeAnimal.MAMMIFERE)) && (animal.getComportement().equals(ComportementAnimal.HERBIVORE))){
+						zone.addAnimal(animal);
+					}
+				break;
+			}
 		}
 	}
 	
+	/**
+	 * Affiche la liste de tous les animaux
+	 */
 	public void afficherListeAnimaux(){
-		savaneAfricaine.afficherListeAnimaux();
-		zoneCarnivore.afficherListeAnimaux();
-		fermeReptile.afficherListeAnimaux();
-		aquarium.afficherListeAnimaux();
+		for(Zone zone : this.zones){
+			zone.afficherListeAnimaux();
+		}
 	}
 
 	/** Getter for nom
